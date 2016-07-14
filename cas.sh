@@ -64,6 +64,8 @@ declare -a BASIC_LIST=(
   "mozilla/Equifax_Secure_CA.crt"
   "mozilla/GTE_CyberTrust_Global_Root.crt"
   "mozilla/GeoTrust_Global_CA.crt"
+  "mozilla/GeoTrust_Primary_Certification_Authority.crt"
+  "mozilla/GeoTrust_Primary_Certification_Authority_-_G3.crt"
   "mozilla/GlobalSign_Root_CA.crt"
   "mozilla/Go_Daddy_Class_2_CA.crt"
   "mozilla/Go_Daddy_Root_Certificate_Authority_-_G2.crt"
@@ -76,6 +78,8 @@ declare -a BASIC_LIST=(
   "mozilla/thawte_Primary_Root_CA.crt"
   "mozilla/thawte_Primary_Root_CA_-_G3.crt"
   "mozilla/SecureTrust_CA.crt"
+  "mozilla/QuoVadis_Root_CA_2.crt"
+  "mozilla/DST_Root_CA_X3.crt"
 )
 CERT_PATH="$( openssl version -a|grep "^OPENSSLDIR:"|cut -d'"' -f2 )/certs"
 WRN=$'\033[1;31m'
@@ -447,6 +451,12 @@ do
       REQUIRED_CAs=( "${OPTARG}" )
     ;;
     "C")
+      if [ ! -d /usr/share/ca-certificates ]
+      then
+	echo "error: directory \`/usr/share/ca-certificates' does not exist!"									1>&2
+	echo "       you might be running RH/CentOS, which has different system for CAs. see https://github.com/pyllyukko/user.js/issues/140"	1>&2
+	exit 1
+      fi
       REQUIRED_CAs=( ${BASIC_LIST[*]/#/\/usr\/share\/ca-certificates\/} )
     ;;
     "a") ACTION="import_cas" ;;
