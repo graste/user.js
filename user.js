@@ -435,6 +435,10 @@ user_pref("browser.sessionstore.postdata",			0);
 // http://kb.mozillazine.org/Browser.sessionstore.enabled
 user_pref("browser.sessionstore.enabled",			false);
 
+user_pref("browser.sessionstore.max_tabs_undo", 0);
+user_pref("browser.sessionstore.max_windows_undo", 0);
+user_pref("browser.sessionstore.resume_from_crash", false);
+
 // http://kb.mozillazine.org/Browser.cache.offline.enable
 user_pref("browser.cache.offline.enable",			false);
 
