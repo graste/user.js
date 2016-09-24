@@ -29,7 +29,7 @@ user_pref("geo.enabled",					false);
 //user_pref("dom.storage.enabled",		false);
 
 // Whether JS can get information about the network/browser connection
-// Network Information API provides general information about the system's connection type (WiFi, cellar, etc.)
+// Network Information API provides general information about the system's connection type (WiFi, cellular, etc.)
 // https://developer.mozilla.org/en-US/docs/Web/API/Network_Information_API
 // https://wicg.github.io/netinfo/#privacy-considerations
 // https://bugzilla.mozilla.org/show_bug.cgi?id=960426
@@ -98,6 +98,9 @@ user_pref("dom.webnotifications.enabled",			false);
 // disable webGL
 // http://www.contextis.com/resources/blog/webgl-new-dimension-browser-exploitation/
 user_pref("webgl.disabled",					true);
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1171228
+// https://developer.mozilla.org/en-US/docs/Web/API/WEBGL_debug_renderer_info
+user_pref("webgl.enable-debug-renderer-info",			false);
 // somewhat related...
 //user_pref("pdfjs.enableWebGL",		false);
 
@@ -131,11 +134,6 @@ user_pref("network.proxy.socks_remote_dns",			true);
 // https://trac.torproject.org/projects/tor/ticket/18945
 user_pref("network.manage-offline-status",		false);
 
-// http://kb.mozillazine.org/Network.proxy.type
-// the default in Firefox for Linux is to use system proxy settings.
-// We change it to direct connection
-//user_pref("network.proxy.type",		0);
-
 // Mixed content stuff
 // https://developer.mozilla.org/en-US/docs/Site_Compatibility_for_Firefox_23#Non-SSL_contents_on_SSL_pages_are_blocked_by_default
 // https://blog.mozilla.org/tanvi/2013/04/10/mixed-content-blocking-enabled-in-firefox-23/
@@ -161,11 +159,6 @@ user_pref("security.fileuri.strict_origin_policy",		true);
 // CIS 2.3.6 Disable Displaying Javascript in History URLs
 // http://kb.mozillazine.org/Browser.urlbar.filter.javascript
 user_pref("browser.urlbar.filter.javascript",			true);
-
-// Disable HTML frames
-// WARNING: might make your life difficult!
-// NOTE: to be removed(?) see: https://bugzilla.mozilla.org/show_bug.cgi?id=729030
-//user_pref("browser.frames.enabled",		false);
 
 // http://asmjs.org/
 // https://www.mozilla.org/en-US/security/advisories/mfsa2015-29/
@@ -484,16 +477,6 @@ user_pref("browser.cache.disk_cache_ssl",			false);
 // CIS Version 1.2.0 October 21st, 2011 2.5.2 Disallow Credential Storage
 user_pref("signon.rememberSignons",				false);
 
-// CIS Version 1.2.0 October 21st, 2011 2.5.4 Delete History and Form Data
-// http://kb.mozillazine.org/Browser.history_expire_days
-user_pref("browser.history_expire_days",			0);
-
-// http://kb.mozillazine.org/Browser.history_expire_sites
-user_pref("browser.history_expire_sites",			0);
-
-// http://kb.mozillazine.org/Browser.history_expire_visits
-user_pref("browser.history_expire_visits",			0);
-
 // CIS Version 1.2.0 October 21st, 2011 2.5.5 Delete Download History
 // Zero (0) is an indication that no download history is retained for the current profile.
 user_pref("browser.download.manager.retention",			0);
@@ -542,9 +525,6 @@ user_pref("plugins.update.notifyUser",				true);
 // CIS Version 1.2.0 October 21st, 2011 2.1.3 Enable Information Bar for Outdated Plugins
 user_pref("plugins.hide_infobar_for_outdated_plugin",		false);
 
-// CIS Version 1.2.0 October 21st, 2011 2.2.3 Enable Warning of Using Weak Encryption
-user_pref("security.warn_entering_weak",			true);
-
 // CIS Mozilla Firefox 24 ESR v1.0.0 - 3.6 Enable IDN Show Punycode
 // http://kb.mozillazine.org/Network.IDN_show_punycode
 user_pref("network.IDN_show_punycode",				true);
@@ -575,10 +555,6 @@ user_pref("signon.autofillForms",				false);
 // do not check if firefox is the default browser
 user_pref("browser.shell.checkDefaultBrowser",			false);
 
-// https://developer.mozilla.org/en/Preferences/Mozilla_preferences_for_uber-geeks
-// see also CVE-2009-3555
-user_pref("security.ssl.warn_missing_rfc5746",			1);
-
 // CIS Version 1.2.0 October 21st, 2011 2.5.3 Disable Prompting for Credential Storage
 user_pref("security.ask_for_password",				0);
 
@@ -602,7 +578,11 @@ user_pref("security.ssl.enable_ocsp_stapling",			true);
 user_pref("security.OCSP.require",				true);
 
 // https://www.blackhat.com/us-13/briefings.html#NextGen
-user_pref("security.enable_tls_session_tickets",		false);
+// https://media.blackhat.com/us-13/US-13-Daigniere-TLS-Secrets-Slides.pdf
+// https://media.blackhat.com/us-13/US-13-Daigniere-TLS-Secrets-WP.pdf
+// https://bugzil.la/917049
+// https://bugzil.la/967977
+user_pref("security.ssl.disable_session_identifiers",		true);
 
 // TLS 1.[012]
 // http://kb.mozillazine.org/Security.tls.version.max
@@ -638,6 +618,10 @@ user_pref("security.ssl.treat_unsafe_negotiation_as_broken",	true);
 //
 // you can test this at https://pinningtest.appspot.com/
 user_pref("security.ssl.errorReporting.automatic",		false);
+
+// http://kb.mozillazine.org/Browser.ssl_override_behavior
+// Pre-populate the current URL but do not pre-fetch the certificate.
+user_pref("browser.ssl_override_behavior",			1);
 
 /******************************************************************************
  * CIPHERS                                                                    *
