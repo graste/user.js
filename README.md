@@ -95,6 +95,7 @@ The file should be located at:
 | OS X                       | `~/Library/Application Support/Firefox/Profiles/XXXXXXXX.your_profile_name`                                                                   |
 | Android                    | `/data/data/org.mozilla.firefox/files/mozilla/XXXXXXXX.your_profile_name` and see [issue #14](https://github.com/pyllyukko/user.js/issues/14) |
 | Sailfish OS + Alien Dalvik | `/opt/alien/data/data/org.mozilla.firefox/files/mozilla/XXXXXXXX.your_profile_name`                                                           |
+| Windows (portable)         | `[firefox directory]\Data\profile\`                                       |
 
 Do note that these settings alter your browser behaviour quite a bit, so it is recommended to either create a completely new [profile][15] for Firefox or backup your existing profile directory before putting the ```user.js``` file in place.
 
@@ -117,16 +118,17 @@ This file should be located at:
 
 
 In `user.js`, Change `user_pref(` to  one of:
- * `pref(` (the value will be used as default value on Firefox profile creation, it can be changed in about:config)
+ * `pref(` (the value will be used as default value on Firefox profile creation, it can be changed in `about:config`)
  * `lockPref(` (the value will be used as default value on Firefox profile creation, will be locked and can't be changed) in `user.js` or in Firefox's `about:config` or settings.
 
 Copy `user.js` to the Firefox installation directory. The file should be located at:
 
-| OS      | Path                                                       |
-| ------- | ---------------------------------------------------------- |
-| Windows | `C:\Program Files (x86)\Mozilla Firefox\mozilla.cfg`       |
-| Linux   | `/etc/firefox/firefox.js`                                  |
-| OS X    | `/Applications/Firefox.app/Contents/Resources/mozilla.cfg` |
+| OS             | Path                                                       |
+| -------------- | ---------------------------------------------------------- |
+| Windows        | `C:\Program Files (x86)\Mozilla Firefox\mozilla.cfg`       |
+| Linux          | `/etc/firefox/firefox.js`                                  |
+| Linux (Debian) | `/etc/firefox-esr/firefox-esr.js`                          |
+| OS X           | `/Applications/Firefox.app/Contents/Resources/mozilla.cfg` |
 
 ### Updating using git
 
@@ -289,7 +291,7 @@ Here is a list of the most essential security and privacy enhancing add-ons that
 
 * [Certificate Patrol][4]
   * I recommend setting the 'Store certificates even when in [Private Browsing][8] Mode' to get full benefit out of certpatrol, even though it stores information about the sites you visit
-* [HTTPS Everywhere](https://www.eff.org/https-everywhere)
+* [HTTPS Everywhere](https://www.eff.org/https-everywhere) and [HTTPS by default](https://addons.mozilla.org/firefox/addon/https-by-default/)
 * [NoScript](http://noscript.net/)
 * [DuckDuckGo Plus](https://addons.mozilla.org/firefox/addon/duckduckgo-for-firefox/) (instead of Google)
 * [No Resource URI Leak](https://addons.mozilla.org/firefox/addon/no-resource-uri-leak/) (see [#163](https://github.com/pyllyukko/user.js/issues/163))
@@ -402,9 +404,11 @@ So I wrapped up a script that uses the certpatrol's SQLite DB and Mozilla's [cer
 
 There's also a ready made list built in into the script, that has 28 root CAs in it. With this list of CAs you should already be able to browse the web quite freely. Of course there might also be some geographical variations as to what CAs "are required" for normal use.
 
+This script requires that you have the CA certificates in ```/usr/share/ca-certificates/mozilla``` (see <https://packages.debian.org/search?keywords=ca-certificates>). Red Hat based systems have a different model for this, so the script doesn't currently work on those (see [#140](https://github.com/pyllyukko/user.js/issues/140)).
+
 ### Examples
 
-**Do note**, that in order for all this to work, you **MUST** remove or rename Firefox's default CA list that is stored inside *libnssckbi.so* as described [here][5].
+**Do note**, that in order for all this to work, you **MUST** remove or rename Firefox's default CA list that is stored inside ```libnssckbi.so``` as described [here][5].
 
 #### Check the current list of CAs in cert8.db
 

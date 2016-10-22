@@ -23,6 +23,12 @@
 // http://www.mozilla.org/en-US/firefox/geolocation/
 user_pref("geo.enabled",					false);
 
+// Disable dom.mozTCPSocket.enabled (raw TCP socket support)
+// https://trac.torproject.org/projects/tor/ticket/18863
+// https://www.mozilla.org/en-US/security/advisories/mfsa2015-97/
+// https://developer.mozilla.org/docs/Mozilla/B2G_OS/API/TCPSocket
+user_pref("dom.mozTCPSocket.enabled",				false);
+
 // http://kb.mozillazine.org/Dom.storage.enabled
 // http://dev.w3.org/html5/webstorage/#dom-localstorage
 // you can also see this with Panopticlick's "DOM localStorage"
@@ -35,10 +41,16 @@ user_pref("geo.enabled",					false);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=960426
 user_pref("dom.netinfo.enabled",				false);
 
+// Disable Web Audio API
+// https://bugzil.la/1288359
+user_pref("dom.webaudio.enabled",				false);
+
 // Don't reveal your internal IP
 // Check the settings with: http://net.ipcalf.com/
 // https://wiki.mozilla.org/Media/WebRTC/Privacy
-user_pref("media.peerconnection.ice.default_address_only",	true);
+user_pref("media.peerconnection.ice.default_address_only",	true); // Firefox < 51
+user_pref("media.peerconnection.ice.no_host",			true); // Firefox >= 51
+// Disable WebRTC entirely
 user_pref("media.peerconnection.enabled",			false);
 
 // getUserMedia
@@ -122,6 +134,10 @@ user_pref("clipboard.autocopy",					false);
 // URL instead of asking from google.
 // http://kb.mozillazine.org/Keyword.enabled#Caveats
 user_pref("keyword.enabled",					false);
+
+// Don't trim HTTP off of URLs in the address bar.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=665580
+user_pref("browser.urlbar.trimURLs",				false);
 
 // Don't try to guess where i'm trying to go!!! e.g.: "http://foo" -> "http://(prefix)foo(suffix)"
 // http://www-archive.mozilla.org/docs/end-user/domain-guessing.html
@@ -408,8 +424,6 @@ user_pref("security.sri.enable",				true);
 // Send a referer header with the target URI as the source
 //user_pref("network.http.sendRefererHeader",			1);
 user_pref("network.http.referer.spoofSource",			true);
-// CIS Version 1.2.0 October 21st, 2011 2.4.3 Disable Referer from an SSL Website
-user_pref("network.http.sendSecureXSiteReferrer",		false);
 
 // CIS 2.5.1 Accept Only 1st Party Cookies
 // http://kb.mozillazine.org/Network.cookie.cookieBehavior#1
